@@ -1,0 +1,22 @@
+{
+  "name": "@tronicboy/todo-api-block",
+  "description": "A template for building Wordpress Blocks with Lit powered Web Components",
+  "private": false,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "build/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:watch": "vite build --watch"
+  },
+  "dependencies": {
+    "@tronicboy/lit-observe-directive": "^0.0.6",
+    "@tronicboy/rxjs-operators": "^0.0.3",
+    "lit": "^2.6.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0"
+  }
+}
