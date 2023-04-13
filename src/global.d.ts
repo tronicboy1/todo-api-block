@@ -3,6 +3,7 @@ declare global {
     wp: {
       blocks: WpBlocks;
       element: WpElement;
+      blockEditor: BlockEditor;
     };
   }
 
@@ -19,8 +20,13 @@ declare global {
       }
     ) => void;
   }
+
   interface WpElement {
     createElement: (tag: keyof HTMLElementTagNameMap, props: any, content: string) => ReactElement;
+  }
+
+  interface BlockEditor {
+    useBlockProps: () => any;
   }
 }
 
