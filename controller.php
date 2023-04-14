@@ -1,13 +1,14 @@
 <?php
 
 namespace Todo;
+include('controller.abstract.php');
 
 use WP_REST_Request;
 use WP_REST_Response;
 
-class TodoController
+class TodoController implements TodoControllerAbstract
 {
-  static function init()
+  static function init(): void
   {
     register_rest_route('todo/v1', '/todos', [
       'methods' => 'GET',
@@ -39,7 +40,7 @@ class TodoController
     ]);
   }
 
-  static function all(WP_REST_Request $request)
+  static function all(WP_REST_Request $request): WP_REST_Response
   {
     $qp = $request->get_query_params();
     $page = array_key_exists('page', $qp) && is_numeric($qp['page']) ? intval($qp['page']) : 1;
@@ -47,25 +48,25 @@ class TodoController
       return TodoController::make400Response('InvalidPage');
     }
 
-    $worker = new TodoDbWorker();
+    $worker = new Worker();
     $data = $worker->all($page);
 
     return TodoController::make200Response($data);
   }
 
-  static function get(WP_REST_Request $request)
+  static function get(WP_REST_Request $request): WP_REST_Response
   {
     $params = $request->get_params();
     $id = intval($params['id']);
 
-    $worker = new TodoDbWorker();
+    $worker = new Worker();
     $data = $worker->get($id);
     if (!$data) return TodoController::make400Response('NotFound');
 
     return TodoController::make200Response($data);
   }
 
-  static function post(WP_REST_Request $request)
+  static function post(WP_REST_Request $request): WP_REST_Response
   {
     $body = $request->get_body_params();
     $text = $body['text'];
@@ -73,31 +74,31 @@ class TodoController
       return TodoController::make400Response('InvalidBody');
     }
 
-    $worker = new TodoDbWorker();
+    $worker = new Worker();
     $worker->create(['text' => $text]);
 
     return TodoController::make200Response();
   }
 
-  static function delete(WP_REST_Request $request)
+  static function delete(WP_REST_Request $request): WP_REST_Response
   {
     $params = $request->get_params();
     $id = intval($params['id']);
 
-    $worker = new TodoDbWorker();
+    $worker = new Worker();
     $worker->destroy($id);
 
     return TodoController::make200Response();
   }
 
-  static private function make400Response($message = '')
+  static private function make400Response($message = ''): WP_REST_Response
   {
     $response = new WP_REST_Response($message);
     $response->set_status(400);
     return $response;
   }
 
-  static private function make200Response($data = 200)
+  static private function make200Response($data = 200): WP_REST_Response
   {
     $response = new WP_REST_Response($data);
     $response->set_status(200);

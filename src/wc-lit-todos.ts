@@ -146,9 +146,19 @@ export class WcLitTodos extends LitElement {
   static styles = [
     css`
       :host {
-        background-color: lightblue;
+        background-color: white;
+        border: 1px solid white;
+        border-radius: 4px;
         display: block;
         padding: 1rem;
+        width: 90%;
+        max-width: 700px;
+        margin: 1rem auto;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.162);
+      }
+
+      h1:first-child {
+        margin-top: 0;
       }
 
       ul {

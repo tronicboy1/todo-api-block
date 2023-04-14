@@ -2,7 +2,9 @@
 
 namespace Todo;
 
-class TodoDbWorker
+include('worker.abstract.php');
+
+class Worker implements WorkerAbstract
 {
   private $wpdb;
   private $table_name = '';
@@ -15,7 +17,7 @@ class TodoDbWorker
     $this->table_name = $wpdb->prefix . 'todos';
   }
 
-  public function setup_table()
+  public function setup_table(): void
   {
     $charset_collate = $this->wpdb->get_charset_collate();
     $sql = "CREATE TABLE $this->table_name (
@@ -30,18 +32,13 @@ class TodoDbWorker
     add_option("todo_db_version", $this->db_version);
   }
 
-  public function destroy_table()
+  public function destroy_table(): void
   {
     $sql = "DROP TABLE IF EXISTS $this->table_name";
     $this->wpdb->query($sql);
   }
 
-  public function insert(array $data)
-  {
-    $this->wpdb->insert($this->table_name, $data);
-  }
-
-  public function all($page = 1, $limit = 10, $order = 'DESC')
+  public function all($page = 1, $limit = 10, $order = 'DESC'): array
   {
     $offset = ($page - 1) * $limit;
     $sql = "SELECT * FROM $this->table_name
@@ -50,18 +47,20 @@ class TodoDbWorker
     return $this->wpdb->get_results($sql);
   }
 
-  public function get(int $id) {
+  public function get(int $id): object | null
+  {
     $sql = "SELECT * FROM $this->table_name
     WHERE id = $id";
     return $this->wpdb->get_row($sql, 'OBJECT');
   }
 
-  public function create(array $data)
+  public function create(array $data): void
   {
     $this->wpdb->insert($this->table_name, $data);
   }
 
-  public function destroy(int $id) {
+  public function destroy(int $id): void
+  {
     $this->wpdb->delete($this->table_name, ['id' => $id]);
   }
 }

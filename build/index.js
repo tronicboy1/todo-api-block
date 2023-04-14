@@ -1,19 +1,19 @@
 var g = Object.defineProperty;
 var x = (e, t, o) => t in e ? g(e, t, { enumerable: !0, configurable: !0, writable: !0, value: o }) : e[t] = o;
-var h = (e, t, o) => (x(e, typeof t != "symbol" ? t + "" : t, o), o);
+var u = (e, t, o) => (x(e, typeof t != "symbol" ? t + "" : t, o), o);
 import { noChange as k, css as v, LitElement as y, html as m } from "lit";
-import { query as w, customElement as T } from "lit/decorators.js";
-import { buffer as L, debounceTime as N, filter as p, map as r, Subject as n, takeUntil as b, BehaviorSubject as C, startWith as j, switchMap as l, mergeMap as a, of as D, sampleTime as S, tap as U } from "rxjs";
-import { directive as E } from "lit/directive.js";
-import { AsyncDirective as O } from "lit/async-directive.js";
-function P(e = 250) {
-  return (t) => t.pipe(L(t.pipe(N(e))), p((o) => o.length > 1), r(([o]) => o));
+import { query as f, customElement as T } from "lit/decorators.js";
+import { buffer as L, debounceTime as N, filter as p, map as s, Subject as n, takeUntil as b, BehaviorSubject as C, startWith as j, switchMap as l, mergeMap as a, of as D, sampleTime as P, tap as E } from "rxjs";
+import { directive as S } from "lit/directive.js";
+import { AsyncDirective as U } from "lit/async-directive.js";
+function O(e = 250) {
+  return (t) => t.pipe(L(t.pipe(N(e))), p((o) => o.length > 1), s(([o]) => o));
 }
-class R extends O {
+class R extends U {
   constructor() {
     super(...arguments);
-    h(this, "source");
-    h(this, "disconnected$", new n());
+    u(this, "source");
+    u(this, "disconnected$", new n());
   }
   render(o) {
     return this.source = o.pipe(b(this.disconnected$)), this.subscribe(), k;
@@ -31,16 +31,16 @@ class R extends O {
     });
   }
 }
-function f(e) {
-  return E(R)(e);
+function $(e) {
+  return S(R)(e);
 }
-var _ = Object.defineProperty, A = Object.getOwnPropertyDescriptor, $ = (e, t, o, c) => {
-  for (var i = c > 1 ? void 0 : c ? A(t, o) : t, d = e.length - 1, u; d >= 0; d--)
-    (u = e[d]) && (i = (c ? u(t, o, i) : u(i)) || i);
-  return c && i && _(t, o, i), i;
+var _ = Object.defineProperty, A = Object.getOwnPropertyDescriptor, w = (e, t, o, r) => {
+  for (var i = r > 1 ? void 0 : r ? A(t, o) : t, d = e.length - 1, h; d >= 0; d--)
+    (h = e[d]) && (i = (r ? h(t, o, i) : h(i)) || i);
+  return r && i && _(t, o, i), i;
 };
-const I = "wc-lit-todos";
-let s = class extends y {
+const B = "wc-lit-todos";
+let c = class extends y {
   constructor() {
     super(...arguments), this.teardown$ = new n(), this.pageNo$ = new C(1), this.refresh$ = new n(), this.todos$ = this.refresh$.pipe(
       j(void 0),
@@ -51,11 +51,11 @@ let s = class extends y {
       }),
       a((e) => e.ok ? e.json() : D([]))
     ), this.input$ = new n(), this.todo$ = this.input$.pipe(
-      S(100),
-      r(() => this.lookup.value),
-      r(Number),
+      P(100),
+      s(() => this.lookup.value),
+      s(Number),
       p((e) => !isNaN(e) && e > 0),
-      U((e) => console.log(e)),
+      E((e) => console.log(e)),
       l((e) => fetch(this.createURL(e))),
       p((e) => e.ok),
       a((e) => e.json())
@@ -67,7 +67,7 @@ let s = class extends y {
   connectedCallback() {
     super.connectedCallback(), this.todoClick$.pipe(
       b(this.teardown$),
-      P(200),
+      O(200),
       a((e) => fetch(this.createURL(e), { method: "DELETE" }))
     ).subscribe({
       next: () => this.refresh$.next(),
@@ -80,8 +80,8 @@ let s = class extends y {
       ),
       p((e) => e.ok),
       a((e) => e.json()),
-      r(({ text: e }) => e),
-      r((e) => e.slice(0, 255)),
+      s(({ text: e }) => e),
+      s((e) => e.slice(0, 255)),
       b(this.teardown$)
     ).subscribe((e) => this.newTodoInput.value = e);
   }
@@ -101,9 +101,9 @@ let s = class extends y {
   render() {
     return m`<h1>All Todos</h1>
       <ul>
-        ${f(
+        ${$(
       this.todos$.pipe(
-        r(
+        s(
           (e) => e.map(
             (t) => m`<li @click=${this.todoClick$.next.bind(this.todoClick$, t.id)}>
                   <small>${t.id}</small>
@@ -120,9 +120,9 @@ let s = class extends y {
       </nav>
       <h1>Todo Lookup</h1>
       <input id="lookup" type="number" @input=${(e) => this.input$.next(e)} />
-      ${f(
+      ${$(
       this.todo$.pipe(
-        r(
+        s(
           (e) => m` <article>
               <h3>${e.text}</h3>
               <p>${new Date(e.created_at).toLocaleString()}</p>
@@ -139,12 +139,22 @@ let s = class extends y {
       </form>`;
   }
 };
-s.styles = [
+c.styles = [
   v`
       :host {
-        background-color: lightblue;
+        background-color: white;
+        border: 1px solid white;
+        border-radius: 4px;
         display: block;
         padding: 1rem;
+        width: 90%;
+        max-width: 700px;
+        margin: 1rem auto;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.162);
+      }
+
+      h1:first-child {
+        margin-top: 0;
       }
 
       ul {
@@ -169,23 +179,26 @@ s.styles = [
       }
     `
 ];
-$([
-  w("input#lookup")
-], s.prototype, "lookup", 2);
-$([
-  w("input#new-todo")
-], s.prototype, "newTodoInput", 2);
-s = $([
-  T(I)
-], s);
-function B(e, t) {
-  const o = t.createElement;
+w([
+  f("input#lookup")
+], c.prototype, "lookup", 2);
+w([
+  f("input#new-todo")
+], c.prototype, "newTodoInput", 2);
+c = w([
+  T(B)
+], c);
+function I(e, t, o) {
+  const r = t.createElement;
   e.registerBlockType("create-block/todo-api-block", {
-    edit: () => o("wc-lit-todos", null, ""),
-    save: () => o("wc-lit-todos", null, ""),
+    edit: () => {
+      const i = o.useBlockProps();
+      return r("wc-lit-todos", i, "");
+    },
+    save: () => r("wc-lit-todos", null, ""),
     title: "Todo API",
     category: "widgets",
     icon: "menu"
   });
 }
-B(window.wp.blocks, window.wp.element);
+I(window.wp.blocks, window.wp.element, window.wp.blockEditor);

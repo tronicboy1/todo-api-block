@@ -16,7 +16,7 @@ namespace Todo;
 include('worker.php');
 include('controller.php');
 
-use Todo\TodoDbWorker;
+use Todo\Worker;
 
 /**
  * Registers all block assets so that they can be enqueued through the block editor
@@ -72,24 +72,24 @@ add_action('admin_head', __NAMESPACE__ . '\add_importmap_script');
 
 function setup_todo_table()
 {
-	$worker = new TodoDbWorker();
+	$worker = new Worker();
 	$worker->setup_table();
 }
 register_activation_hook(__FILE__, __NAMESPACE__ . '\setup_todo_table');
 
 function destroy_todo_table()
 {
-	$worker = new TodoDbWorker();
+	$worker = new Worker();
 	$worker->destroy_table();
 }
-register_deactivation_hook(__FILE__, '\destroy_todo_table');
+register_deactivation_hook(__FILE__, __NAMESPACE__ . '\destroy_todo_table');
 add_action('rest_api_init', __NAMESPACE__ . '\TodoController::init');
 
-function add_type_module_tag(string $tag, string $handle, string $src): string
-{
-	if (str_contains($handle, 'lit') || str_contains($handle, 'svelte')) {
-		return "<script type=\"module\" src=\"$src\" defer></script>";
-	}
-	return $tag;
-}
-add_filter('script_loader_tag', __NAMESPACE__ . '\add_type_module_tag');
+// function add_type_module_tag(string $tag, string $handle, string $src): string
+// {
+// 	if (str_contains($handle, 'lit') || str_contains($handle, 'svelte')) {
+// 		return "<script type=\"module\" src=\"$src\" defer></script>";
+// 	}
+// 	return $tag;
+// }
+// add_filter('script_loader_tag', __NAMESPACE__ . '\add_type_module_tag');
