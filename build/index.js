@@ -150,7 +150,6 @@ c.styles = [
         width: 90%;
         max-width: 700px;
         margin: 1rem auto;
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.162);
       }
 
       h1:first-child {

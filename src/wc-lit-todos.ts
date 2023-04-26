@@ -16,7 +16,7 @@ import {
 import { filterForDoubleClick } from "@tronicboy/rxjs-operators";
 import { observe } from "@tronicboy/lit-observe-directive";
 
-const tagName = "wc-lit-todos";
+export const tagName = "wc-lit-todos";
 
 type Todo = { text: string; id: number; created_at: string };
 
@@ -154,7 +154,6 @@ export class WcLitTodos extends LitElement {
         width: 90%;
         max-width: 700px;
         margin: 1rem auto;
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.162);
       }
 
       h1:first-child {

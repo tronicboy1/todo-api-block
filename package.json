@@ -5,6 +5,7 @@
   "version": "0.0.0",
   "type": "module",
   "main": "build/index.js",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -13,6 +14,7 @@
   "dependencies": {
     "@tronicboy/lit-observe-directive": "^0.0.6",
     "@tronicboy/rxjs-operators": "^0.0.3",
+    "@types/wp-window-definitions": "file:.yalc/@types/wp-window-definitions",
     "lit": "^2.6.1"
   },
   "devDependencies": {

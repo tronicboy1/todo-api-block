@@ -1,14 +1,24 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "create-block/todo-api-block",
-	"version": "0.1.0",
-	"title": "Todo API",
-	"category": "widgets",
-	"icon": "menu",
-	"description": "Example static block scaffolded with Create Block tool.",
-	"supports": {
-			"html": false
-	},
-	"textdomain": "gutenpride"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "create-block/todo-api-block",
+  "version": "0.1.0",
+  "title": "Todo API",
+  "category": "widgets",
+  "icon": "menu",
+  "description": "Example static block scaffolded with Create Block tool.",
+  "supports": {
+    "html": false
+  },
+  "textdomain": "gutenpride",
+  "attributes": {
+    "message": {
+      "type": "string",
+      "default": ""
+    },
+		"edit": {
+			"type": "boolean",
+			"default": "false"
+		}
+  }
 }

@@ -49,7 +49,7 @@ class TodoController implements TodoControllerAbstract
     }
 
     $worker = new Worker();
-    $data = $worker->all($page);
+    $data = $worker->all($page, 3);
 
     return TodoController::make200Response($data);
   }
