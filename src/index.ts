@@ -1,4 +1,5 @@
 import "./wc-lit-todos";
+import "@angular/localize/init";
 
 function registerBlock(blocks: WpBlocks, element: WpElement, blockEditor: BlockEditor) {
   const el = element.createElement;

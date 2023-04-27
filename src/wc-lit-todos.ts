@@ -101,9 +101,10 @@ export class WcLitTodos extends LitElement {
       form.reset();
     });
   }
+  message = "you";
 
   render() {
-    return html`<h1>All Todos</h1>
+    return html`<h1 i18n>All Todos</h1>
       <ul>
         ${observe(
           this.todos$.pipe(
@@ -118,6 +119,7 @@ export class WcLitTodos extends LitElement {
           )
         )}
       </ul>
+      <p>${$localize`Hello World ${this.message}`}</p>
       <nav>
         <button @click=${() => this.pageNo$.next(this.pageNo$.value - 1)}>Back</button>
         <button @click=${() => this.pageNo$.next(this.pageNo$.value + 1)}>Next</button>

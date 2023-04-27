@@ -1,22 +1,22 @@
-var g = Object.defineProperty;
-var x = (e, t, o) => t in e ? g(e, t, { enumerable: !0, configurable: !0, writable: !0, value: o }) : e[t] = o;
-var u = (e, t, o) => (x(e, typeof t != "symbol" ? t + "" : t, o), o);
-import { noChange as k, css as v, LitElement as y, html as m } from "lit";
-import { query as f, customElement as T } from "lit/decorators.js";
-import { buffer as L, debounceTime as N, filter as p, map as s, Subject as n, takeUntil as b, BehaviorSubject as C, startWith as j, switchMap as l, mergeMap as a, of as D, sampleTime as P, tap as E } from "rxjs";
-import { directive as S } from "lit/directive.js";
+var v = Object.defineProperty;
+var y = (e, t, o) => t in e ? v(e, t, { enumerable: !0, configurable: !0, writable: !0, value: o }) : e[t] = o;
+var h = (e, t, o) => (y(e, typeof t != "symbol" ? t + "" : t, o), o);
+import { noChange as L, css as T, LitElement as C, html as b } from "lit";
+import { query as x, customElement as N } from "lit/decorators.js";
+import { buffer as j, debounceTime as B, filter as d, map as r, Subject as l, takeUntil as f, BehaviorSubject as R, startWith as D, switchMap as c, mergeMap as a, of as E, sampleTime as O, tap as S } from "rxjs";
+import { directive as _ } from "lit/directive.js";
 import { AsyncDirective as U } from "lit/async-directive.js";
-function O(e = 250) {
-  return (t) => t.pipe(L(t.pipe(N(e))), p((o) => o.length > 1), s(([o]) => o));
+function A(e = 250) {
+  return (t) => t.pipe(j(t.pipe(B(e))), d((o) => o.length > 1), r(([o]) => o));
 }
-class R extends U {
+class I extends U {
   constructor() {
     super(...arguments);
-    u(this, "source");
-    u(this, "disconnected$", new n());
+    h(this, "source");
+    h(this, "disconnected$", new l());
   }
   render(o) {
-    return this.source = o.pipe(b(this.disconnected$)), this.subscribe(), k;
+    return this.source = o.pipe(f(this.disconnected$)), this.subscribe(), L;
   }
   disconnected() {
     this.disconnected$.next();
@@ -31,58 +31,58 @@ class R extends U {
     });
   }
 }
-function $(e) {
-  return S(R)(e);
+function w(e) {
+  return _(I)(e);
 }
-var _ = Object.defineProperty, A = Object.getOwnPropertyDescriptor, w = (e, t, o, r) => {
-  for (var i = r > 1 ? void 0 : r ? A(t, o) : t, d = e.length - 1, h; d >= 0; d--)
-    (h = e[d]) && (i = (r ? h(t, o, i) : h(i)) || i);
-  return r && i && _(t, o, i), i;
+var W = Object.defineProperty, K = Object.getOwnPropertyDescriptor, $ = (e, t, o, i) => {
+  for (var n = i > 1 ? void 0 : i ? K(t, o) : t, p = e.length - 1, u; p >= 0; p--)
+    (u = e[p]) && (n = (i ? u(t, o, n) : u(n)) || n);
+  return i && n && W(t, o, n), n;
 };
-const B = "wc-lit-todos";
-let c = class extends y {
+const z = "wc-lit-todos";
+let s = class extends C {
   constructor() {
-    super(...arguments), this.teardown$ = new n(), this.pageNo$ = new C(1), this.refresh$ = new n(), this.todos$ = this.refresh$.pipe(
-      j(void 0),
-      l(() => this.pageNo$),
-      l((e) => {
+    super(...arguments), this.teardown$ = new l(), this.pageNo$ = new R(1), this.refresh$ = new l(), this.todos$ = this.refresh$.pipe(
+      D(void 0),
+      c(() => this.pageNo$),
+      c((e) => {
         const t = this.createURL();
         return t.searchParams.set("page", String(e)), fetch(t);
       }),
-      a((e) => e.ok ? e.json() : D([]))
-    ), this.input$ = new n(), this.todo$ = this.input$.pipe(
-      P(100),
-      s(() => this.lookup.value),
-      s(Number),
-      p((e) => !isNaN(e) && e > 0),
-      E((e) => console.log(e)),
-      l((e) => fetch(this.createURL(e))),
-      p((e) => e.ok),
+      a((e) => e.ok ? e.json() : E([]))
+    ), this.input$ = new l(), this.todo$ = this.input$.pipe(
+      O(100),
+      r(() => this.lookup.value),
+      r(Number),
+      d((e) => !isNaN(e) && e > 0),
+      S((e) => console.log(e)),
+      c((e) => fetch(this.createURL(e))),
+      d((e) => e.ok),
       a((e) => e.json())
-    ), this.todoClick$ = new n();
+    ), this.todoClick$ = new l(), this.message = "you";
   }
   disconnectedCallback() {
     super.disconnectedCallback(), this.teardown$.next();
   }
   connectedCallback() {
     super.connectedCallback(), this.todoClick$.pipe(
-      b(this.teardown$),
-      O(200),
+      f(this.teardown$),
+      A(200),
       a((e) => fetch(this.createURL(e), { method: "DELETE" }))
     ).subscribe({
       next: () => this.refresh$.next(),
       error: (e) => console.error(e)
     }), this.refresh$.pipe(
-      l(
+      c(
         () => fetch("https://api.api-ninjas.com/v1/loremipsum", {
           headers: { "X-Api-Key": "U7Wx9nE59Xx++ZqOvj1L0w==ILpTGo8Nj5y8XSR1" }
         })
       ),
-      p((e) => e.ok),
+      d((e) => e.ok),
       a((e) => e.json()),
-      s(({ text: e }) => e),
-      s((e) => e.slice(0, 255)),
-      b(this.teardown$)
+      r(({ text: e }) => e),
+      r((e) => e.slice(0, 255)),
+      f(this.teardown$)
     ).subscribe((e) => this.newTodoInput.value = e);
   }
   createURL(e) {
@@ -99,13 +99,13 @@ let c = class extends y {
     });
   }
   render() {
-    return m`<h1>All Todos</h1>
+    return b`<h1 i18n>All Todos</h1>
       <ul>
-        ${$(
+        ${w(
       this.todos$.pipe(
-        s(
+        r(
           (e) => e.map(
-            (t) => m`<li @click=${this.todoClick$.next.bind(this.todoClick$, t.id)}>
+            (t) => b`<li @click=${this.todoClick$.next.bind(this.todoClick$, t.id)}>
                   <small>${t.id}</small>
                   <br />${t.text}
                 </li>`
@@ -114,16 +114,17 @@ let c = class extends y {
       )
     )}
       </ul>
+      <p>${$localize`Hello World ${this.message}`}</p>
       <nav>
         <button @click=${() => this.pageNo$.next(this.pageNo$.value - 1)}>Back</button>
         <button @click=${() => this.pageNo$.next(this.pageNo$.value + 1)}>Next</button>
       </nav>
       <h1>Todo Lookup</h1>
       <input id="lookup" type="number" @input=${(e) => this.input$.next(e)} />
-      ${$(
+      ${w(
       this.todo$.pipe(
-        s(
-          (e) => m` <article>
+        r(
+          (e) => b` <article>
               <h3>${e.text}</h3>
               <p>${new Date(e.created_at).toLocaleString()}</p>
             </article>`
@@ -139,8 +140,8 @@ let c = class extends y {
       </form>`;
   }
 };
-c.styles = [
-  v`
+s.styles = [
+  T`
       :host {
         background-color: white;
         border: 1px solid white;
@@ -178,26 +179,63 @@ c.styles = [
       }
     `
 ];
-w([
-  f("input#lookup")
-], c.prototype, "lookup", 2);
-w([
-  f("input#new-todo")
-], c.prototype, "newTodoInput", 2);
-c = w([
-  T(B)
-], c);
-function I(e, t, o) {
-  const r = t.createElement;
+$([
+  x("input#lookup")
+], s.prototype, "lookup", 2);
+$([
+  x("input#new-todo")
+], s.prototype, "newTodoInput", 2);
+s = $([
+  N(z)
+], s);
+/**
+ * @license Angular v15.2.8
+ * (c) 2010-2022 Google LLC. https://angular.io/
+ * License: MIT
+ */
+const q = ":";
+var g;
+(function(e) {
+  e[e.Little = 0] = "Little", e[e.Big = 1] = "Big";
+})(g || (g = {}));
+function G(e, t) {
+  for (let o = 1, i = 1; o < e.length; o++, i++)
+    if (t[i] === "\\")
+      i++;
+    else if (e[o] === q)
+      return o;
+  throw new Error(`Unterminated $localize metadata block in "${t}".`);
+}
+const M = /* @__PURE__ */ (() => typeof globalThis < "u" && globalThis || typeof global < "u" && global || typeof window < "u" && window || typeof self < "u" && typeof WorkerGlobalScope < "u" && self instanceof WorkerGlobalScope && self)(), m = function(e, ...t) {
+  if (m.translate) {
+    const i = m.translate(e, t);
+    e = i[0], t = i[1];
+  }
+  let o = k(e[0], e.raw[0]);
+  for (let i = 1; i < e.length; i++)
+    o += t[i - 1] + k(e[i], e.raw[i]);
+  return o;
+}, X = ":";
+function k(e, t) {
+  return t.charAt(0) === X ? e.substring(G(e, t) + 1) : e;
+}
+/**
+ * @license Angular v15.2.8
+ * (c) 2010-2022 Google LLC. https://angular.io/
+ * License: MIT
+ */
+M.$localize = m;
+function F(e, t, o) {
+  const i = t.createElement;
   e.registerBlockType("create-block/todo-api-block", {
     edit: () => {
-      const i = o.useBlockProps();
-      return r("wc-lit-todos", i, "");
+      const n = o.useBlockProps();
+      return i("wc-lit-todos", n, "");
     },
-    save: () => r("wc-lit-todos", null, ""),
+    save: () => i("wc-lit-todos", null, ""),
     title: "Todo API",
     category: "widgets",
     icon: "menu"
   });
 }
-I(window.wp.blocks, window.wp.element, window.wp.blockEditor);
+F(window.wp.blocks, window.wp.element, window.wp.blockEditor);

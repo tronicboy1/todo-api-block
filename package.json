@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "build:watch": "vite build --watch"
+    "build:watch": "vite build --watch",
+    "build:i18n": "vite build --config extract-i18n.vite.config.ts"
   },
   "dependencies": {
     "@tronicboy/lit-observe-directive": "^0.0.6",
@@ -18,6 +19,10 @@
     "lit": "^2.6.1"
   },
   "devDependencies": {
+    "@angular/compiler": "^15.2.8",
+    "@angular/compiler-cli": "^15.2.8",
+    "@angular/localize": "^15.2.8",
+    "rollup-plugin-ng-i18n": "^0.0.1",
     "typescript": "^4.9.3",
     "vite": "^4.2.0"
   }
